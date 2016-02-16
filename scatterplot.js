@@ -27,7 +27,8 @@ var canvas = d3.select("body").append("svg")
                               .attr("width", width)
                               .attr("height", height)
                               .append("g")
-                              .attr("transform", "translate(0,0)");//move the whole chart
+                              .attr("transform", "translate(0,0)")
+                              .append("g");//move the whole chart !!!(but not the canvas?)
 
 var circles = canvas.selectAll("circle")
                  .data(dataset)
@@ -52,13 +53,11 @@ var circles = canvas.selectAll("circle")
 var xAxis = d3.svg.axis()
               .scale(xScale)
               .orient("bottom") //specify where the labels will apear
-              //.labels("x")
               .ticks("5");
 //define y axis
 var yAxis = d3.svg.axis()
               .scale(yScale)
               .orient("left") //specify where the labels will apear
-             // .labels("y")
               .ticks("10");
 
 canvas.append("g")
@@ -70,3 +69,16 @@ canvas.append("g")
       .attr("class", "axis")
       .attr("transform","translate(" + padding + ", 0)")
       .call(yAxis);
+
+var xLabel = canvas.append("text")
+                .attr("x", (width-padding)/2)
+                .attr("y",height - 20)
+                .style("text-anchor", "middle")
+                .text("xLabel")
+
+var yLabel = canvas.append("text")
+                .attr("x", (-width)/2)//due to rotate
+                .attr("y",padding/4)
+                .attr("transform","rotate(-90)") //watch out of rotate the coordanites change y is now x and x is now y
+                .style("text-anchor", "middle")
+                .text("yLabel")
